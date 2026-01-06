@@ -29,10 +29,14 @@ public class ReservationRepository : RepositoryBase<Reservation>, IReservationRe
 
     public async Task<bool> HasOverlappingReservationAsync(int roomId, DateTime checkIn, DateTime checkOut, int? excludeReservationId = null)
     {
+        // PostgreSQL requires UTC dates
+        var checkInUtc = DateTime.SpecifyKind(checkIn, DateTimeKind.Utc);
+        var checkOutUtc = DateTime.SpecifyKind(checkOut, DateTimeKind.Utc);
+
         var query = _dbSet
             .Where(r => r.RoomId == roomId)
             .Where(r => r.Status == ReservationStatus.Active)
-            .Where(r => r.CheckInDate < checkOut && r.CheckOutDate > checkIn);
+            .Where(r => r.CheckInDate < checkOutUtc && r.CheckOutDate > checkInUtc);
 
         if (excludeReservationId.HasValue)
         {

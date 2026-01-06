@@ -13,12 +13,16 @@ public class RoomRepository : RepositoryBase<Room>, IRoomRepository
 
     public async Task<IEnumerable<Room>> GetAvailableRoomsAsync(DateTime checkIn, DateTime checkOut, int? minCapacity = null)
     {
+        // PostgreSQL requires UTC dates
+        var checkInUtc = DateTime.SpecifyKind(checkIn, DateTimeKind.Utc);
+        var checkOutUtc = DateTime.SpecifyKind(checkOut, DateTimeKind.Utc);
+
         var query = _dbSet
             .Where(r => r.IsActive)
             .Where(r => !r.Reservations.Any(res =>
                 res.Status == ReservationStatus.Active &&
-                res.CheckInDate < checkOut &&
-                res.CheckOutDate > checkIn));
+                res.CheckInDate < checkOutUtc &&
+                res.CheckOutDate > checkInUtc));
 
         if (minCapacity.HasValue)
         {

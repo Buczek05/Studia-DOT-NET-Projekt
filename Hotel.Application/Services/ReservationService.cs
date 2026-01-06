@@ -102,8 +102,8 @@ public class ReservationService : IReservationService
         {
             RoomId = dto.RoomId,
             GuestId = dto.GuestId,
-            CheckInDate = dto.CheckInDate,
-            CheckOutDate = dto.CheckOutDate,
+            CheckInDate = DateTime.SpecifyKind(dto.CheckInDate, DateTimeKind.Utc),
+            CheckOutDate = DateTime.SpecifyKind(dto.CheckOutDate, DateTimeKind.Utc),
             GuestsCount = dto.GuestsCount,
             TotalPrice = totalPrice,
             Status = ReservationStatus.Active,

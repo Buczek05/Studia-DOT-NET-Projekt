@@ -1,0 +1,33 @@
+# Git
+.git
+.gitignore
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+
+# Build outputs
+**/bin
+**/obj
+**/out
+
+# Documentation
+docs
+*.md
+!README.md
+
+# Tests (not needed in production image)
+Hotel.Tests
+
+# Environment files
+.env
+*.env
+appsettings.Development.json
+
+# Misc
+.dockerignore
+Dockerfile
+docker-compose*.yml
+*.log
