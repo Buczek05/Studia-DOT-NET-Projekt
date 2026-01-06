@@ -38,5 +38,15 @@ public record RoomFilterDto(
     decimal? MaxPrice = null,
     bool? IsActive = null,
     bool? HasBalcony = null,
-    bool? HasView = null
+    bool? HasView = null,
+    int Page = 1,
+    int PageSize = 10
+);
+
+public record PagedResult<T>(
+    IEnumerable<T> Items,
+    int TotalCount,
+    int Page,
+    int PageSize,
+    int TotalPages
 );

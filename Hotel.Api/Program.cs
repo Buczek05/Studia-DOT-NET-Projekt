@@ -1,3 +1,4 @@
+using Hotel.Api.Middleware;
 using Hotel.Application;
 using Hotel.Infrastructure;
 using Hotel.Infrastructure.Data;
@@ -40,6 +41,9 @@ if (app.Environment.IsDevelopment())
         options.RoutePrefix = "swagger";
     });
 }
+
+// Global exception handling
+app.UseExceptionHandling();
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
