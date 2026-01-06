@@ -1,4 +1,4 @@
-namespace Hotel.Infrastructure.Entities;
+namespace Hotel.Application.Entities;
 
 public enum RoomType
 {

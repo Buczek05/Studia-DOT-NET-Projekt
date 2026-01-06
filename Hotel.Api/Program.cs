@@ -1,3 +1,4 @@
+using Hotel.Infrastructure;
 using Hotel.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,12 +11,20 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Configure PostgreSQL Database
+// Configure Infrastructure (Database + Repositories)
 var connectionString = GetConnectionString(builder.Configuration);
-builder.Services.AddDbContext<HotelDbContext>(options =>
-    options.UseNpgsql(connectionString));
+builder.Services.AddInfrastructure(connectionString);
 
 var app = builder.Build();
+
+// Apply migrations and seed data in Development
+if (app.Environment.IsDevelopment())
+{
+    using var scope = app.Services.CreateScope();
+    var context = scope.ServiceProvider.GetRequiredService<HotelDbContext>();
+    await context.Database.MigrateAsync();
+    await DatabaseSeeder.SeedAsync(context);
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -49,7 +58,7 @@ static string GetConnectionString(IConfiguration configuration)
     if (!string.IsNullOrEmpty(host))
     {
         var port = Environment.GetEnvironmentVariable("DATABASE_PORT") ?? "5432";
-        var database = Environment.GetEnvironmentVariable("DATABASE_NAME") ?? "hotel_dev";
+        var database = Environment.GetEnvironmentVariable("DATABASE_NAME") ?? "hotel_db";
         var user = Environment.GetEnvironmentVariable("DATABASE_USER") ?? "postgres";
         var password = Environment.GetEnvironmentVariable("DATABASE_PASSWORD") ?? "postgres";
 
