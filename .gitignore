@@ -52,3 +52,21 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+
+# Project tasks folder
+.tasks/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# User secrets
+secrets.json
+
+# IDE
+.idea/
+.vs/
+*.user
+*.suo
