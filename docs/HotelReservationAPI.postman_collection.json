@@ -1,0 +1,299 @@
+{
+  "info": {
+    "name": "Hotel Reservation API",
+    "description": "REST API do zarządzania rezerwacjami hotelowymi",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://localhost:5001"
+    }
+  ],
+  "item": [
+    {
+      "name": "Rooms",
+      "item": [
+        {
+          "name": "Get All Rooms",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/rooms?page=1&pageSize=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "rooms"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "pageSize", "value": "10" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get All Rooms (Filtered)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/rooms?type=Double&minCapacity=2&maxPrice=300&isActive=true",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "rooms"],
+              "query": [
+                { "key": "type", "value": "Double" },
+                { "key": "minCapacity", "value": "2" },
+                { "key": "maxPrice", "value": "300" },
+                { "key": "isActive", "value": "true" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Room by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/rooms/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "rooms", "1"]
+            }
+          }
+        },
+        {
+          "name": "Get Available Rooms",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/rooms/available?checkIn=2025-07-01&checkOut=2025-07-05&minCapacity=2",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "rooms", "available"],
+              "query": [
+                { "key": "checkIn", "value": "2025-07-01" },
+                { "key": "checkOut", "value": "2025-07-05" },
+                { "key": "minCapacity", "value": "2" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Room",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/rooms",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "rooms"]
+            },
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"number\": \"501\",\n  \"type\": \"Suite\",\n  \"capacity\": 4,\n  \"pricePerNight\": 600,\n  \"hasBalcony\": true,\n  \"hasView\": true\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Room",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "{{baseUrl}}/api/rooms/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "rooms", "1"]
+            },
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pricePerNight\": 175\n}"
+            }
+          }
+        },
+        {
+          "name": "Deactivate Room",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/rooms/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "rooms", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Guests",
+      "item": [
+        {
+          "name": "Get All Guests",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/guests",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "guests"]
+            }
+          }
+        },
+        {
+          "name": "Get Guest by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/guests/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "guests", "1"]
+            }
+          }
+        },
+        {
+          "name": "Get Guest by Email",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/guests/by-email/jan.kowalski@email.com",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "guests", "by-email", "jan.kowalski@email.com"]
+            }
+          }
+        },
+        {
+          "name": "Create Guest",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/guests",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "guests"]
+            },
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Adam\",\n  \"lastName\": \"Nowicki\",\n  \"email\": \"adam.nowicki@email.com\",\n  \"phone\": \"+48111222333\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Guest",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "{{baseUrl}}/api/guests/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "guests", "1"]
+            },
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"+48999888777\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reservations",
+      "item": [
+        {
+          "name": "Get All Reservations",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/reservations",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "reservations"]
+            }
+          }
+        },
+        {
+          "name": "Get Reservation by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/reservations/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "reservations", "1"]
+            }
+          }
+        },
+        {
+          "name": "Get Reservations by Guest",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/reservations/by-guest/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "reservations", "by-guest", "1"]
+            }
+          }
+        },
+        {
+          "name": "Get Reservations by Room",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/reservations/by-room/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "reservations", "by-room", "1"]
+            }
+          }
+        },
+        {
+          "name": "Create Reservation",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/reservations",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "reservations"]
+            },
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"roomId\": 1,\n  \"guestId\": 1,\n  \"checkInDate\": \"2025-08-01\",\n  \"checkOutDate\": \"2025-08-05\",\n  \"guestsCount\": 1\n}"
+            }
+          }
+        },
+        {
+          "name": "Cancel Reservation",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/reservations/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "reservations", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Availability",
+      "item": [
+        {
+          "name": "Check Availability",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/availability?checkIn=2025-07-01&checkOut=2025-07-05&minCapacity=2",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "availability"],
+              "query": [
+                { "key": "checkIn", "value": "2025-07-01" },
+                { "key": "checkOut", "value": "2025-07-05" },
+                { "key": "minCapacity", "value": "2" }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
