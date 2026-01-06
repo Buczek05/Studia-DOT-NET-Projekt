@@ -1,3 +1,4 @@
+using Hotel.Application;
 using Hotel.Infrastructure;
 using Hotel.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,9 @@ builder.Services.AddSwaggerGen();
 // Configure Infrastructure (Database + Repositories)
 var connectionString = GetConnectionString(builder.Configuration);
 builder.Services.AddInfrastructure(connectionString);
+
+// Configure Application Services
+builder.Services.AddApplication();
 
 var app = builder.Build();
 
