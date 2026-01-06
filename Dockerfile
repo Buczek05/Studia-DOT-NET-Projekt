@@ -2,21 +2,19 @@
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
-# Copy solution and project files
-COPY *.sln ./
+# Copy project files
 COPY Hotel.Api/*.csproj ./Hotel.Api/
 COPY Hotel.Application/*.csproj ./Hotel.Application/
 COPY Hotel.Infrastructure/*.csproj ./Hotel.Infrastructure/
-COPY Hotel.Tests/*.csproj ./Hotel.Tests/
 
 # Restore dependencies
-RUN dotnet restore
+RUN dotnet restore Hotel.Api/Hotel.Api.csproj
 
 # Copy source code
 COPY . .
 
 # Build application
-RUN dotnet build -c Release --no-restore
+RUN dotnet build Hotel.Api/Hotel.Api.csproj -c Release --no-restore
 
 # Publish application
 RUN dotnet publish Hotel.Api/Hotel.Api.csproj -c Release -o /app/publish --no-build
